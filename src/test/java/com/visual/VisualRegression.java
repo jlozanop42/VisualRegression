@@ -1,5 +1,6 @@
 package com.visual;
 
+import com.visual.Utils.ScreenCaptureUtility;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,8 +21,10 @@ public class VisualRegression {
 
     @Test
     public void test() {
-        driver.get("https://google.com");
-        assertThat(driver.getTitle()).containsIgnoringCase("Publicis");
+        driver.get("https://demo.guru99.com/test/newtours/");
+        assertThat(driver.getTitle()).containsIgnoringCase("Welcome: Mercury Tours");
+        ScreenCaptureUtility screenCaptureUtility = new ScreenCaptureUtility();
+        screenCaptureUtility.takeScreenshot(driver, "Emiliano");
     }
 
     @AfterMethod
