@@ -2,7 +2,7 @@
 <suite name="Test-Suite" >
     <test name="Visual Regresion" >
         <classes>
-            <class name="com.visual.VisualRegression" />
+            <class name="com.visual.VisualRegressionTest" />
         </classes>
     </test>
 </suite>
