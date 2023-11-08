@@ -1,5 +1,6 @@
 package com.visual.Utils;
 
+import com.visual.ImagesTypes;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.ashot.AShot;
@@ -22,17 +23,18 @@ public class ScreenCaptureUtility {
             baseLineImage = ImageIO.read(new File(System.getProperty("user.dir") +
                     File.separator + "src" + File.separator + "images"
                     + File.separator + "baseline" + File.separator + baseLineTitle + ".png"));
-            baseLineImage = ImageIO.read(new File(System.getProperty("user.dir") +
+            screenshotImage = ImageIO.read(new File(System.getProperty("user.dir") +
                     File.separator + "src" + File.separator + "images"
                     + File.separator + "screenshots" + File.separator + screenshotTitle + ".png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Sucessfully read");
         ImageDiff imageDiff = new ImageDiffer().makeDiff(baseLineImage, screenshotImage);
         boolean areImagesDifferent =  imageDiff.hasDiff();
 
         if(areImagesDifferent) {
-            BufferedImage imageDifferences = null;
+            BufferedImage imageDifferences = imageDiff.getMarkedImage();
             try{
                 ImageIO.write(imageDifferences, "png", new File(System.getProperty("user.dir") +
                         File.separator + "src" + File.separator + "images"
@@ -46,11 +48,11 @@ public class ScreenCaptureUtility {
         return !areImagesDifferent;
     }
 
-    public void takeScreenshot(WebDriver webDriver, String fileName) {
+    public void takeScreenshot(WebDriver webDriver, String fileName, ImagesTypes imageType) {
         Screenshot screen = new AShot().takeScreenshot(webDriver);
         BufferedImage bi = screen.getImage();
         File file = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "images"
-                + File.separator + "screenshots" + File.separator + fileName + ".png");
+                + File.separator + imageType.getValue() + File.separator + fileName + ".png");
         try {
             ImageIO.write(bi, "png", file);
         } catch (Exception e) {
