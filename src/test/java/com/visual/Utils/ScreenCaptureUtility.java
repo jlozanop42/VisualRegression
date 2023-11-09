@@ -1,6 +1,6 @@
 package com.visual.Utils;
 
-import com.visual.ImagesTypes;
+import com.visual.enums.ImagesTypes;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.ashot.AShot;
@@ -29,7 +29,6 @@ public class ScreenCaptureUtility {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Sucessfully read");
         ImageDiff imageDiff = new ImageDiffer().makeDiff(baseLineImage, screenshotImage);
         boolean areImagesDifferent =  imageDiff.hasDiff();
 

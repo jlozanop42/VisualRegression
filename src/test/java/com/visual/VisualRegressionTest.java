@@ -1,6 +1,7 @@
 package com.visual;
 
 import com.visual.Utils.ScreenCaptureUtility;
+import com.visual.enums.ImagesTypes;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.*;
 public class VisualRegressionTest {
     WebDriver driver;
 
-    ScreenCaptureUtility screenCaptureUtility = new ScreenCaptureUtility();;
+    ScreenCaptureUtility screenCaptureUtility = new ScreenCaptureUtility();
 
     @BeforeMethod()
     public void setup() {

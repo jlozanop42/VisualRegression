@@ -1,4 +1,4 @@
-package com.visual;
+package com.visual.enums;
 
 public enum ImagesTypes {
 
