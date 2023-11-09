@@ -10,6 +10,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -54,7 +55,8 @@ public class RegressionSuite {
     }
 
     @Test(dataProvider = "urls")
-    public void compareImagesTest(String url, String name, Method method) {
+    public void compareImagesTest(String url, String name, Method method, ITestContext context) {
+        context.getCurrentXmlTest().addParameter("image", name);
         test = extent.createTest(method.getName() + " in the url: " + url);
         driver.get(url);
         screenCaptureUtility.takeScreenshot(driver, name, ImagesTypes.SCREENSHOTS);
@@ -62,9 +64,14 @@ public class RegressionSuite {
     }
 
     @AfterMethod
-    public void afterMethod(ITestResult result) {
+    public void afterMethod(ITestResult result, ITestContext context) {
+        String image = context.getCurrentXmlTest().getParameter("image");
         if(result.getStatus() == ITestResult.SUCCESS)  test.pass("Test passed");
-        if(result.getStatus() == ITestResult.FAILURE) test.log(Status.FAIL, result.getThrowable());
+        if(result.getStatus() == ITestResult.FAILURE) {
+            System.out.println(String.format("%s/src/images/diffImages/%s.png", System.getProperty("user.dir"), image));
+            test.addScreenCaptureFromPath(String.format("%s/src/images/diffImages/%s.png", System.getProperty("user.dir"), image), "Screenshot");
+            test.log(Status.FAIL, result.getThrowable());
+        }
         if(result.getStatus() == ITestResult.SKIP) test.log(Status.SKIP, "Test skipped");
     }
 
