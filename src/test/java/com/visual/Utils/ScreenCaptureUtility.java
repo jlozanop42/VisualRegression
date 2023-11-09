@@ -8,6 +8,7 @@ import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.comparison.ImageDiff;
 import ru.yandex.qatools.ashot.comparison.ImageDiffer;
 import ru.yandex.qatools.ashot.coordinates.WebDriverCoordsProvider;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -48,7 +49,7 @@ public class ScreenCaptureUtility {
     }
 
     public void takeScreenshot(WebDriver webDriver, String fileName, ImagesTypes imageType) {
-        Screenshot screen = new AShot().takeScreenshot(webDriver);
+        Screenshot screen = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(webDriver);
         BufferedImage bi = screen.getImage();
         File file = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "images"
                 + File.separator + imageType.getValue() + File.separator + fileName + ".png");

@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.*;
 public class RegressionSuite {
     WebDriver driver;
 
-    ScreenCaptureUtility screenCaptureUtility = new ScreenCaptureUtility();
+    ScreenCaptureUtility screenCaptureUtility;
 
     ExtentReports extent;
     ExtentSparkReporter sparkReporter;
@@ -31,6 +31,7 @@ public class RegressionSuite {
 
     @BeforeClass
     public void cleanDirectories() {
+        screenCaptureUtility = new ScreenCaptureUtility();
         extent = new ExtentReports();
         sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + File.separator + "reports" + File.separator + "report.html");
         extent.attachReporter(sparkReporter);
@@ -42,6 +43,7 @@ public class RegressionSuite {
         } catch (Exception ignored) {}
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @DataProvider(name = "urls")

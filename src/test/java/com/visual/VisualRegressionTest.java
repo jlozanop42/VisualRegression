@@ -38,11 +38,6 @@ public class VisualRegressionTest {
     }
 
     @Test
-    public void prepareBaseLine(String url, String name) {
-
-    }
-
-    @Test
     public void takeScreenshotOfEntireScreen() {
         screenCaptureUtility.takeScreenshot(driver, "HomePage", ImagesTypes.SCREENSHOTS);
     }

@@ -3,22 +3,28 @@ package com.visual;
 import com.visual.Utils.ScreenCaptureUtility;
 import com.visual.enums.ImagesTypes;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import java.io.File;
 
 public class PrepareBaseLineTest {
     WebDriver driver;
 
-    ScreenCaptureUtility screenCaptureUtility = new ScreenCaptureUtility();;
+    ScreenCaptureUtility screenCaptureUtility;
 
-    @BeforeMethod()
+    @BeforeClass()
     public void setup() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        screenCaptureUtility = new ScreenCaptureUtility();
+        try {
+            FileUtils.cleanDirectory(new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "images"
+                    + File.separator + "baseline"));
+        } catch (Exception ignored) {}
     }
 
     @DataProvider(name = "urls")
@@ -37,7 +43,7 @@ public class PrepareBaseLineTest {
         screenCaptureUtility.takeScreenshot(driver, name, ImagesTypes.BASELINE);
     }
 
-    @AfterMethod
+    @AfterClass
     public void quit() {
         driver.quit();
     }
